@@ -45,6 +45,7 @@ public:
     void initializeMines(int clickX, int clickY);
     void leftClickAt(int clickX, int clickY);
     void rightClickAt(int clickX, int clickY);
+    Tile *chooseAdjacentBlock(Tile *tile);
     void revealFirstEmpties();
 };
 

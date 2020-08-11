@@ -240,39 +240,51 @@ void Grid::updateTextures() {
     }
 }
 
-void Grid::setEmptyBlock(int originX, int originY, int numSpaces){
-    int assigned = 0;
-    Tile blockMembers[12];
-    blockMembers[0] = gameGrid[originX][originY];
-    assigned++;
-    do {
-        int xChoice = rand() % 16;
-        int yChoice = rand() % 16;
-        for(int i = 0; i < assigned; i++){
-            if (areAdjacent(gameGrid[xChoice][yChoice], blockMembers[i])) {
-                blockMembers[i+1] = gameGrid[xChoice][yChoice];
-                printf("xChoice is: %d\n",  xChoice);
-                printf("yChoice is: %d\n", yChoice);
-                printf(" \n");
-                assigned++;
+Tile* Grid::chooseAdjacentBlock(Tile* tile){
+    Tile* adjacentSpaces[8];
+    int adjacentFilled = 0;
+    for(int x = 0; x < 16; x++){
+        for(int y = 0; y < 16; y++){
+            if(areAdjacent(*tile, gameGrid[x][y])){
+                adjacentSpaces[adjacentFilled] = &gameGrid[x][y];
+                adjacentFilled++;
             }
         }
-    } while (assigned < numSpaces);
-    
-    for(int i = 0; i < assigned; i++){
-        blockMembers[i].reservedEmpty = true;
-        int x = blockMembers[i].xVal;
-        int y = blockMembers[i].yVal;
-        //printf("reserved for empty at [%d][%d]\n", x, y);
     }
+    int randIndex = rand() % 8;
+    Tile* newTile = adjacentSpaces[randIndex];
+    return newTile;
 }
 
+void Grid::setEmptyBlock(int originX, int originY, int numSpaces){
+    Tile* pgameGrid[16][16];
+    for(int x = 0; x < 16; x++){
+        for(int y = 0; y < 16; y++){
+            pgameGrid[x][y] = &gameGrid[x][y];
+        }
+    }
+    int tilesAssigned = 0;
+    Tile* origin = pgameGrid[originX][originY];
+    Tile* chosenTiles[numSpaces];
+    chosenTiles[0] = origin;
+    tilesAssigned++;
+    while(tilesAssigned < numSpaces){
+        int randIndex = rand() % tilesAssigned;
+        chosenTiles[tilesAssigned + 1] = chooseAdjacentBlock(chosenTiles[randIndex]);
+        tilesAssigned++;
+    }
+    
+    
+    }
+
+    
+
 void Grid::revealFirstEmpties(){
-    printf("revealFirstEmpties started\n");
+    printf("ready to reveal empties\n");
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
             if(gameGrid[x][y].reservedEmpty){
-                printf("reserved for empty at: [%d][%d]\n", x, y);
+                printf("reserved empty found at: [%d][%d]\n", x, y);
                 gameGrid[x][y].isHidden = false;
                 gameGrid[x][y].revealed = true;
             }
@@ -280,11 +292,9 @@ void Grid::revealFirstEmpties(){
     }
 }
 
-
 void Grid::initializeMines(int clickX, int clickY){
     printf("initializing mines. . .\n");
     setEmptyBlock(clickX, clickY, 7);
-    printf("empty block set\n");
     int totalMines = 40;
     for(int i = 0; i < totalMines; i++){
         int xChoice = rand() % 16;
