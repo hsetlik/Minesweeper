@@ -140,7 +140,6 @@ Tile::~Tile(){
 void Tile::init(int x, int y){
     xVal = x;
     yVal = y;
-    currentTexture = 0;
     isHidden = true;
     hasFlag = false;
     hasMine = false;
@@ -151,33 +150,30 @@ void Tile::init(int x, int y){
     tileRect.y = _topLeftYPx;
     tileRect.h = 25;
     tileRect.w = 25;
-    printf("Current texture is: %d\n", currentTexture);
 }
-    void Tile::setTexture(){
-        if(isHidden){
-            currentTexture = 0;
-        } else if(hasFlag){
-            currentTexture = 1;
-        } else if(hasMine) {
-            currentTexture = 2;
-        } else if(revealed){
-            currentTexture = 3;
-        }
+void Tile::setTexture(){
+    if(isHidden){
+        currentTexture = 0;
+    } else if(hasFlag){
+        currentTexture = 1;
+    } else if(hasMine) {
+        currentTexture = 2;
+    } else if(revealed){
+        currentTexture = 3;
+    }
     }
 
 //Grid stuff
 
 Grid::Grid(){
-    
 }
 Grid::~Grid(){
 }
-    void Grid::init(){
-        printf("Grid init() started\n");
-        for(int x = 0; x < 16; x++){
-            for(int y = 0; y > 16; y++){
-                gameGrid[x][y].init(x, y);
-                printf("Tile at [%d][%d] initialized\n", x, y);
+void Grid::init(){
+    for(int x = 0; x < 16; x++){
+        for(int y = 0; y < 16; y++){
+            gameGrid[x][y].init(x, y);
+            gameGrid[x][y].setTexture();
             }
         }
     }
