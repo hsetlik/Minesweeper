@@ -130,7 +130,53 @@ Grid::Grid(){
 }
 Grid::~Grid(){
 }
-
 void Grid::init(){
-    
+    for(int x = 0; x < 16; x++){
+        for(int y = 0; y > 16; y++){
+            gameGrid[x][y].init(x, y);
+        }
+    }
 }
+
+bool Grid:: areAdjacent(Tile tileA, Tile tileB){
+    //making a list of all 8 adjacent tiles
+    Tile adjacentSpaces[8];
+    adjacentSpaces[0] = gameGrid[tileA.xVal - 1][tileA.yVal -1] ; //top left
+    adjacentSpaces[1] = gameGrid[tileA.xVal][tileA.yVal -1]; //top center
+    adjacentSpaces[2] = gameGrid[tileA.xVal + 1][tileA.yVal -1]; // top right
+    adjacentSpaces[3] = gameGrid[tileA.xVal +1][tileA.yVal]; // right side
+    adjacentSpaces[4] = gameGrid[tileA.xVal + 1][tileA.yVal + 1]; // bottom right
+    adjacentSpaces[5] = gameGrid[tileA.xVal][tileA.yVal + 1]; // bottom center
+    adjacentSpaces[6] = gameGrid[tileA.xVal - 1][tileA.yVal + 1]; // bottom left
+    adjacentSpaces[7] = gameGrid[tileA.xVal - 1][tileA.yVal];// left side
+    for(int i = 0; i < 8; i++){
+        if(adjacentSpaces[i].xVal == tileB.xVal){
+            if(adjacentSpaces[i].yVal == tileB.yVal){
+                return true;
+                break;
+            }
+        }
+    }
+    return false;
+}
+
+
+int Grid::minesAdjacentTo(Tile tile){
+    int count = 0;
+    Tile adjacentSpaces[8];
+    adjacentSpaces[0] = gameGrid[tile.xVal - 1][tile.yVal -1] ; //top left
+    adjacentSpaces[1] = gameGrid[tile.xVal][tile.yVal -1]; //top center
+    adjacentSpaces[2] = gameGrid[tile.xVal + 1][tile.yVal -1]; // top right
+    adjacentSpaces[3] = gameGrid[tile.xVal +1][tile.yVal]; // right side
+    adjacentSpaces[4] = gameGrid[tile.xVal + 1][tile.yVal + 1]; // bottom right
+    adjacentSpaces[5] = gameGrid[tile.xVal][tile.yVal + 1]; // bottom center
+    adjacentSpaces[6] = gameGrid[tile.xVal - 1][tile.yVal + 1]; // bottom left
+    adjacentSpaces[7] = gameGrid[tile.xVal - 1][tile.yVal];// left side
+    for(int i = 0; i < 8; i++){
+        if(adjacentSpaces[i].hasMine){
+            count += 1;
+        }
+    }
+    return count;
+}
+

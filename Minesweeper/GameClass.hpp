@@ -34,7 +34,7 @@ public:
     Grid();
     ~Grid();
     Tile gameGrid[16][16];
-    void init();
+    void init(); //just runs the tile's init() function for each element in gameGrid
     int minesAdjacentTo(Tile tile);
     bool areAdjacent(Tile tileA, Tile tileB);
 };
