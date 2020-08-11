@@ -37,9 +37,12 @@ public:
     Tile gameGrid[16][16];
     void init(); //just runs the tile's init() function for each element in gameGrid
     void updateTextures();
+    bool minesSet;
     int minesAdjacentTo(Tile tile);
     bool areAdjacent(Tile tileA, Tile tileB);
     void initializeMines(int clickX, int clickY);
+    void leftClickAt(int clickX, int clickY);
+    void rightClickAt(int clickX, int clickY);
 };
 
 

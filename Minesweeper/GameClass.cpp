@@ -76,11 +76,21 @@ void Game::handleEvents()
             _clickY = clickYpx/25;
             int clickX = round(_clickX);
             int clickY = round(_clickY);
-            grid.gameGrid[clickX][clickY].hasFlag = true;
+            switch (event.button.button) {
+                case SDL_BUTTON_LEFT:
+                    grid.leftClickAt(clickX, clickY);
+                    break;
+                case SDL_BUTTON_RIGHT:
+                    grid.rightClickAt(clickX, clickY);
+                    break;
+                default:
+                    break;
+            }
+            
+            
             //do stuff when the mouse is clicked
             break;
         }
-            // check for more events with more case statements here
         default: {
             break;
         }
@@ -174,8 +184,10 @@ void Grid::init(){
         for(int y = 0; y < 16; y++){
             gameGrid[x][y].init(x, y);
             gameGrid[x][y].setTexture();
+            printf("Texture at [%d][%d]: %d\n", x, y, gameGrid[x][y].currentTexture);
             }
         }
+    minesSet = false;
     }
 
 bool Grid:: areAdjacent(Tile tileA, Tile tileB){
@@ -227,3 +239,57 @@ void Grid::updateTextures() {
     }
 }
 
+void Grid::initializeMines(int clickX, int clickY){
+    printf("initializing mines. . .\n");
+    int minesRemaining = 40;
+    Tile startingEmpties[6];
+    int emptiesCounter = 1;
+    startingEmpties[0] = gameGrid[clickX][clickY];
+    for (int x = 0; x < 16; x++) {
+            for(int y = 0; y < 16; y ++){
+                while(emptiesCounter < 6){
+                    if(areAdjacent(gameGrid[x][y], startingEmpties[emptiesCounter - 1])){
+                        startingEmpties[emptiesCounter] = gameGrid[x][y];
+                        emptiesCounter++;
+                        gameGrid[x][y].revealed = true;
+                    }
+                }
+            }
+    }
+    
+    while(minesRemaining > 0){
+        for(int x = 0; x < 16; x++){
+            for(int y = 0; y < 16; y++){
+                int xChoice;
+                int yChoice;
+                xChoice = rand() % 16;
+                yChoice = rand() % 16;
+                for(int i =0; i < 6; i++){
+                    if(xChoice == startingEmpties[i].xVal & yChoice == startingEmpties[i].yVal){
+                        xChoice = rand() % 16;
+                        yChoice = rand() % 16;
+                    }
+                    else{
+                        gameGrid[xChoice][yChoice].hasMine = true;
+                        minesRemaining--;
+                    }
+                }
+            }
+        }
+    }
+        minesSet = true;
+    }
+    
+void Grid:: rightClickAt(int clickX, int clickY){
+    printf("right click\n");
+    if(minesSet == false){
+        initializeMines(clickX, clickY);
+    }
+}
+
+void Grid::leftClickAt(int clickX, int clickY){
+    printf("left click\n");
+    if(minesSet == false){
+        initializeMines(clickX, clickY);
+    }
+}
