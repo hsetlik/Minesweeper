@@ -5,8 +5,8 @@
 //  Created by Hayden on 8/10/20.
 //  Copyright © 2020 Hayden Setlik. All rights reserved.
 //
-
 #include "GameClass.hpp"
+#include <cmath>
 
 Game::Game() {
     }
@@ -62,20 +62,33 @@ void Game::handleEvents()
     SDL_Event event;
     SDL_PollEvent(&event);
     switch (event.type) {
-        case SDL_QUIT:
+        case SDL_QUIT: {
             isRunning = false;
             break;
-        case SDL_MOUSEBUTTONDOWN:
+        }
+        case SDL_MOUSEBUTTONDOWN:{
+            double _clickX;
+            double _clickY;
+            int clickXpx, clickYpx;
+            SDL_GetMouseState(&clickXpx, &clickYpx);
+            _clickX = clickXpx/25;
+            _clickY = clickYpx/25;
+            int clickX = round(_clickX);
+            int clickY = round(_clickY);
+            grid.gameGrid[clickX][clickY].hasFlag = true;
             //do stuff when the mouse is clicked
             break;
-        // check for more events with more case statements here
-        default:
+        }
+            // check for more events with more case statements here
+        default: {
             break;
+        }
     }
 }
 void Game::update()
 {
     grid.updateTextures();
+    printf("Textures updated\n");
 }
 void Game::clean()
 {
@@ -125,7 +138,7 @@ Tile::~Tile(){
 void Tile::init(int x, int y){
     xVal = x;
     yVal = y;
-    currentTexture = 0;
+    //currentTexture = 0;
     isHidden = true;
     hasFlag = false;
     hasMine = false;
@@ -137,17 +150,17 @@ void Tile::init(int x, int y){
     tileRect.h = 25;
     tileRect.w = 25;
 }
-void Tile::setTexture(){
-    if(isHidden){
-        currentTexture = 0;
-    } else if(hasFlag){
-        currentTexture = 1;
-    } else if(hasMine) {
-        currentTexture = 2;
-    } else if(revealed){
-        currentTexture = 3;
+    void Tile::setTexture(){
+        if(isHidden){
+            currentTexture = 0;
+        } else if(hasFlag){
+            currentTexture = 1;
+        } else if(hasMine) {
+            currentTexture = 2;
+        } else if(revealed){
+            currentTexture = 3;
+        }
     }
-}
 
 //Grid stuff
 
@@ -156,13 +169,13 @@ Grid::Grid(){
 }
 Grid::~Grid(){
 }
-void Grid::init(){
-    for(int x = 0; x < 16; x++){
-        for(int y = 0; y > 16; y++){
-            gameGrid[x][y].init(x, y);
+    void Grid::init(){
+        for(int x = 0; x < 16; x++){
+            for(int y = 0; y > 16; y++){
+                gameGrid[x][y].init(x, y);
+            }
         }
     }
-}
 
 bool Grid:: areAdjacent(Tile tileA, Tile tileB){
     //making a list of all 8 adjacent tiles
