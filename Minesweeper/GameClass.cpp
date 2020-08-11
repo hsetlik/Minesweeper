@@ -36,14 +36,14 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         isRunning = true;
     }
     //create a temporary surface for the image
-    SDL_Surface *tempSurfaceEmpty = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/TwoDEngine/TwoDEngine/PNG_Assets/empty_tileQuarter.png");
+    SDL_Surface *tempSurfaceEmpty = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/TwoDEngine/TwoDEngine/PNG_Assets/hidden_tileQuarter.png");
     //convert that temporary surface to a texture for actual use
     emptyTile = SDL_CreateTextureFromSurface(renderer, tempSurfaceEmpty);
     //gets rid of that temporary surface
     SDL_FreeSurface(tempSurfaceEmpty);
     //doing the above for the rest of the PNGs
     //the hidden tile
-    SDL_Surface *tempSurfaceHidden = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/TwoDEngine/TwoDEngine/PNG_Assets/hidden_tileQuarter.png");
+    SDL_Surface *tempSurfaceHidden = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/TwoDEngine/TwoDEngine/PNG_Assets/empty_tileQuarter.png");
     hiddenTile = SDL_CreateTextureFromSurface(renderer, tempSurfaceHidden);
     SDL_FreeSurface(tempSurfaceHidden);
     //the flag tile
@@ -154,6 +154,7 @@ void Tile::init(int x, int y){
     hasFlag = false;
     hasMine = false;
     revealed = false;
+    reservedEmpty = false;
     _topLeftXPx = xVal * 25;
     _topLeftYPx = yVal * 25;
     tileRect.x = _topLeftXPx;
@@ -239,51 +240,76 @@ void Grid::updateTextures() {
     }
 }
 
-void Grid::initializeMines(int clickX, int clickY){
-    printf("initializing mines. . .\n");
-    int minesRemaining = 40;
-    Tile startingEmpties[6];
-    int emptiesCounter = 1;
-    startingEmpties[0] = gameGrid[clickX][clickY];
-    for (int x = 0; x < 16; x++) {
-            for(int y = 0; y < 16; y ++){
-                while(emptiesCounter < 6){
-                    if(areAdjacent(gameGrid[x][y], startingEmpties[emptiesCounter - 1])){
-                        startingEmpties[emptiesCounter] = gameGrid[x][y];
-                        emptiesCounter++;
-                        gameGrid[x][y].revealed = true;
-                    }
-                }
+void Grid::setEmptyBlock(int originX, int originY, int numSpaces){
+    int assigned = 0;
+    Tile blockMembers[12];
+    blockMembers[0] = gameGrid[originX][originY];
+    assigned++;
+    do {
+        int xChoice = rand() % 16;
+        int yChoice = rand() % 16;
+        for(int i = 0; i < assigned; i++){
+            if (areAdjacent(gameGrid[xChoice][yChoice], blockMembers[i])) {
+                blockMembers[i+1] = gameGrid[xChoice][yChoice];
+                printf("xChoice is: %d\n",  xChoice);
+                printf("yChoice is: %d\n", yChoice);
+                printf(" \n");
+                assigned++;
             }
-    }
+        }
+    } while (assigned < numSpaces);
     
-    while(minesRemaining > 0){
-        for(int x = 0; x < 16; x++){
-            for(int y = 0; y < 16; y++){
-                int xChoice;
-                int yChoice;
-                xChoice = rand() % 16;
-                yChoice = rand() % 16;
-                for(int i =0; i < 6; i++){
-                    if(xChoice == startingEmpties[i].xVal & yChoice == startingEmpties[i].yVal){
-                        xChoice = rand() % 16;
-                        yChoice = rand() % 16;
-                    }
-                    else{
-                        gameGrid[xChoice][yChoice].hasMine = true;
-                        minesRemaining--;
-                    }
-                }
+    for(int i = 0; i < assigned; i++){
+        blockMembers[i].reservedEmpty = true;
+        int x = blockMembers[i].xVal;
+        int y = blockMembers[i].yVal;
+        //printf("reserved for empty at [%d][%d]\n", x, y);
+    }
+}
+
+void Grid::revealFirstEmpties(){
+    printf("revealFirstEmpties started\n");
+    for(int x = 0; x < 16; x++){
+        for(int y = 0; y < 16; y++){
+            if(gameGrid[x][y].reservedEmpty){
+                printf("reserved for empty at: [%d][%d]\n", x, y);
+                gameGrid[x][y].isHidden = false;
+                gameGrid[x][y].revealed = true;
             }
         }
     }
-        minesSet = true;
+}
+
+
+void Grid::initializeMines(int clickX, int clickY){
+    printf("initializing mines. . .\n");
+    setEmptyBlock(clickX, clickY, 7);
+    printf("empty block set\n");
+    int totalMines = 40;
+    for(int i = 0; i < totalMines; i++){
+        int xChoice = rand() % 16;
+        int yChoice = rand() % 16;
+        if(gameGrid[xChoice][yChoice].reservedEmpty){
+            i++;
+            break;
+        } else {
+            gameGrid[xChoice][yChoice].hasMine = true;
+            //these lines only for testing
+            gameGrid[xChoice][yChoice].isHidden = false;
+        }
     }
+    revealFirstEmpties();
+    minesSet = true;
+    printf("mines initialized\n");
+}
     
 void Grid:: rightClickAt(int clickX, int clickY){
     printf("right click\n");
     if(minesSet == false){
         initializeMines(clickX, clickY);
+    } else if(gameGrid[clickX][clickY].isHidden){
+        gameGrid[clickX][clickY].hasFlag = true;
+        gameGrid[clickX][clickY].isHidden = false;
     }
 }
 
@@ -291,5 +317,9 @@ void Grid::leftClickAt(int clickX, int clickY){
     printf("left click\n");
     if(minesSet == false){
         initializeMines(clickX, clickY);
+    } else {
+        gameGrid[clickX][clickY].isHidden = false;
+        gameGrid[clickX][clickY].revealed = true;
+        printf("texture of clicked space: %d\n", gameGrid[clickX][clickY].currentTexture);
     }
 }

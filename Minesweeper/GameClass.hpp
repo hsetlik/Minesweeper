@@ -22,6 +22,7 @@ public:
     bool hasMine;
     bool hasFlag;
     bool revealed;
+    bool reservedEmpty;
     SDL_Rect tileRect;
     int currentTexture;
     void setTexture();
@@ -40,9 +41,11 @@ public:
     bool minesSet;
     int minesAdjacentTo(Tile tile);
     bool areAdjacent(Tile tileA, Tile tileB);
+    void setEmptyBlock(int originX, int originY, int numSpaces);
     void initializeMines(int clickX, int clickY);
     void leftClickAt(int clickX, int clickY);
     void rightClickAt(int clickX, int clickY);
+    void revealFirstEmpties();
 };
 
 
