@@ -100,10 +100,9 @@ Tile::Tile(){
 }
 Tile::~Tile(){
 }
-void Tile::init(int x, int y, bool hasMine){
+void Tile::init(int x, int y){
     xVal = x;
     yVal = y;
-    hasMine = false;
     _topLeftXPx = xVal * 25;
     _topLeftYPx = yVal * 25;
     tileRect.x = _topLeftXPx;
@@ -122,4 +121,16 @@ void Tile::setTexture(){
     } else {
         currentTexture = 3;
     }
+}
+
+//Grid stuff
+
+Grid::Grid(){
+    
+}
+Grid::~Grid(){
+}
+
+void Grid::init(){
+    
 }

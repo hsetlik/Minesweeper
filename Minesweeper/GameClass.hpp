@@ -15,19 +15,28 @@ class Tile {
 public:
     Tile();
     ~Tile();
-    void init(int x, int y, bool hasMine);
+    void init(int x, int y);
     int xVal;
     int yVal;
     bool isHidden;
     bool hasMine;
     bool hasFlag;
-    int minesAdjacent();
     SDL_Rect tileRect;
     int currentTexture;
     void setTexture();
 private:
     int _topLeftXPx;
     int _topLeftYPx;
+};
+
+class Grid {
+public:
+    Grid();
+    ~Grid();
+    Tile gameGrid[16][16];
+    void init();
+    int minesAdjacentTo(Tile tile);
+    bool areAdjacent(Tile tileA, Tile tileB);
 };
 
 
@@ -49,15 +58,10 @@ public:
     //manages memory
     void clean();
     bool running() {return isRunning;}
-    Tile grid[16][16];
-    void initGrid();
-    void updateGrid();
 private:
     int _redlevel = 255;
     bool isRunning;
     SDL_Window *window;
     SDL_Renderer *renderer;
 };
-
-
 #endif /* GameClass_hpp */
