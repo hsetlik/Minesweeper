@@ -56,6 +56,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     SDL_FreeSurface(tempSurfaceMine);
     printf("PNG files loaded to textures\n");
     grid.init();
+    printf("Grid initialized");
 }
 void Game::handleEvents()
 {
@@ -88,7 +89,7 @@ void Game::handleEvents()
 void Game::update()
 {
     grid.updateTextures();
-    printf("Textures updated\n");
+    //printf("Textures updated\n");
 }
 void Game::clean()
 {
@@ -104,11 +105,12 @@ void Game::render(){
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
             int texture = grid.gameGrid[x][y].currentTexture;
-            SDL_Rect currentRect;
-            currentRect.w = 25;
-            currentRect.h = 25;
-            currentRect.x = 25 * x;
-            currentRect.y = 25 * y;
+                //printf("Texture for [%d][%d]: %d\n", x, y, texture);
+                SDL_Rect currentRect;
+                currentRect.w = 25;
+                currentRect.h = 25;
+                currentRect.x = 25 * x;
+                currentRect.y = 25 * y;
             switch (texture) {
                 case 0:
                     SDL_RenderCopy(renderer, hiddenTile, NULL, &currentRect);
@@ -138,7 +140,7 @@ Tile::~Tile(){
 void Tile::init(int x, int y){
     xVal = x;
     yVal = y;
-    //currentTexture = 0;
+    currentTexture = 0;
     isHidden = true;
     hasFlag = false;
     hasMine = false;
@@ -149,6 +151,7 @@ void Tile::init(int x, int y){
     tileRect.y = _topLeftYPx;
     tileRect.h = 25;
     tileRect.w = 25;
+    printf("Current texture is: %d", currentTexture);
 }
     void Tile::setTexture(){
         if(isHidden){
