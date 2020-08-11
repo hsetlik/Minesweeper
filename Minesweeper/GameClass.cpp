@@ -92,7 +92,28 @@ void Game::clean()
 
 void Game::render(){
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, flagTile, NULL, NULL);
+    //SDL_RenderCopy(renderer, flagTile, NULL, NULL);
+    for(int x = 0; x < 16; x++){
+        for(int y = 0; y < 16; y++){
+            int texture = grid.gameGrid[x][y].currentTexture;
+            switch (texture) {
+                case 0:
+                    SDL_RenderCopy(renderer, hiddenTile, &grid.gameGrid[x][y].tileRect, &grid.gameGrid[x][y].tileRect);
+                    break;
+                case 1:
+                SDL_RenderCopy(renderer, flagTile, &grid.gameGrid[x][y].tileRect, &grid.gameGrid[x][y].tileRect);
+                break;
+                case 2:
+                SDL_RenderCopy(renderer, mineTile, &grid.gameGrid[x][y].tileRect, &grid.gameGrid[x][y].tileRect);
+                break;
+                case 3:
+                    SDL_RenderCopy(renderer, emptyTile, &grid.gameGrid[x][y].tileRect, &grid.gameGrid[x][y].tileRect);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     SDL_RenderPresent(renderer);
 }
 // Time for the Tile Class

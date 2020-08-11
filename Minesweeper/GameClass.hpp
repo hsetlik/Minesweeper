@@ -37,6 +37,7 @@ public:
     void init(); //just runs the tile's init() function for each element in gameGrid
     int minesAdjacentTo(Tile tile);
     bool areAdjacent(Tile tileA, Tile tileB);
+    void initializeMines(int clickX, int clickY);
 };
 
 
@@ -48,6 +49,7 @@ public:
     SDL_Texture * emptyTile;
     SDL_Texture * flagTile;
     SDL_Texture * hiddenTile;
+    Grid grid;
     void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
     //handles user inputs and whatever the hell else
     void handleEvents();

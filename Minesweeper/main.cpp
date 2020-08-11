@@ -9,7 +9,6 @@
 Game *game = nullptr;
 int main(int argc, const char * argv[]) {
     game = new Game();
-    //grid = new Grid();
     game-> init("Minesweeper", 600, 600, 400, 400, false);
     while(game->running()){
         game->handleEvents();
