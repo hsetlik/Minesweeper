@@ -21,6 +21,7 @@ public:
     bool isHidden;
     bool hasMine;
     bool hasFlag;
+    bool revealed;
     SDL_Rect tileRect;
     int currentTexture;
     void setTexture();
@@ -35,6 +36,7 @@ public:
     ~Grid();
     Tile gameGrid[16][16];
     void init(); //just runs the tile's init() function for each element in gameGrid
+    void updateTextures();
     int minesAdjacentTo(Tile tile);
     bool areAdjacent(Tile tileA, Tile tileB);
     void initializeMines(int clickX, int clickY);

@@ -55,12 +55,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     mineTile = SDL_CreateTextureFromSurface(renderer, tempSurfaceMine);
     SDL_FreeSurface(tempSurfaceMine);
     printf("PNG files loaded to textures\n");
-    for(int x = 0; x < 16; x++){
-        for(int y = 0; y < 16; y++){
-            //activeGrid[x][y].init(x, y, 0);
-        }
-    }
-
+    grid.init();
 }
 void Game::handleEvents()
 {
@@ -80,6 +75,7 @@ void Game::handleEvents()
 }
 void Game::update()
 {
+    grid.updateTextures();
 }
 void Game::clean()
 {
@@ -92,25 +88,30 @@ void Game::clean()
 
 void Game::render(){
     SDL_RenderClear(renderer);
-    //SDL_RenderCopy(renderer, flagTile, NULL, NULL);
     for(int x = 0; x < 16; x++){
         for(int y = 0; y < 16; y++){
             int texture = grid.gameGrid[x][y].currentTexture;
+            SDL_Rect currentRect;
+            currentRect.w = 25;
+            currentRect.h = 25;
+            currentRect.x = 25 * x;
+            currentRect.y = 25 * y;
             switch (texture) {
                 case 0:
-                    SDL_RenderCopy(renderer, hiddenTile, &grid.gameGrid[x][y].tileRect, &grid.gameGrid[x][y].tileRect);
+                    SDL_RenderCopy(renderer, hiddenTile, NULL, &currentRect);
                     break;
                 case 1:
-                SDL_RenderCopy(renderer, flagTile, &grid.gameGrid[x][y].tileRect, &grid.gameGrid[x][y].tileRect);
+                SDL_RenderCopy(renderer, flagTile, NULL, &currentRect);
                 break;
                 case 2:
-                SDL_RenderCopy(renderer, mineTile, &grid.gameGrid[x][y].tileRect, &grid.gameGrid[x][y].tileRect);
+                SDL_RenderCopy(renderer, mineTile, NULL, &currentRect);
                 break;
                 case 3:
-                    SDL_RenderCopy(renderer, emptyTile, &grid.gameGrid[x][y].tileRect, &grid.gameGrid[x][y].tileRect);
+                    SDL_RenderCopy(renderer, emptyTile, NULL, &currentRect);
                     break;
-                default:
-                    break;
+                /*default:
+                  SDL_RenderCopy(renderer, hiddenTile, NULL, &currentRect);
+                  break;*/
             }
         }
     }
@@ -124,13 +125,17 @@ Tile::~Tile(){
 void Tile::init(int x, int y){
     xVal = x;
     yVal = y;
+    currentTexture = 0;
+    isHidden = true;
+    hasFlag = false;
+    hasMine = false;
+    revealed = false;
     _topLeftXPx = xVal * 25;
     _topLeftYPx = yVal * 25;
     tileRect.x = _topLeftXPx;
     tileRect.y = _topLeftYPx;
     tileRect.h = 25;
     tileRect.w = 25;
-    currentTexture = 0;
 }
 void Tile::setTexture(){
     if(isHidden){
@@ -139,7 +144,7 @@ void Tile::setTexture(){
         currentTexture = 1;
     } else if(hasMine) {
         currentTexture = 2;
-    } else {
+    } else if(revealed){
         currentTexture = 3;
     }
 }
@@ -181,7 +186,6 @@ bool Grid:: areAdjacent(Tile tileA, Tile tileB){
     return false;
 }
 
-
 int Grid::minesAdjacentTo(Tile tile){
     int count = 0;
     Tile adjacentSpaces[8];
@@ -199,5 +203,13 @@ int Grid::minesAdjacentTo(Tile tile){
         }
     }
     return count;
+}
+
+void Grid::updateTextures() {
+    for (int x = 0; x < 16; x++) {
+        for(int y = 0; y < 16; y ++){
+            gameGrid[x][y].setTexture();
+        }
+    }
 }
 
