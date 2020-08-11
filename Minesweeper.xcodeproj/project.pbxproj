@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		C0AE6F8F24E2512A004C4666 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0AE6F8E24E2512A004C4666 /* main.cpp */; };
+		C0AE6F9824E25159004C4666 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE6F9624E25159004C4666 /* SDL2_image.framework */; };
+		C0AE6F9924E25159004C4666 /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE6F9624E25159004C4666 /* SDL2_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C0AE6F9A24E25159004C4666 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE6F9724E25159004C4666 /* SDL2.framework */; };
+		C0AE6F9B24E25159004C4666 /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE6F9724E25159004C4666 /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C0AE6F9F24E25194004C4666 /* GameClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0AE6F9D24E25194004C4666 /* GameClass.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,11 +25,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		C0AE6F9C24E25159004C4666 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C0AE6F9924E25159004C4666 /* SDL2_image.framework in Embed Frameworks */,
+				C0AE6F9B24E25159004C4666 /* SDL2.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C0AE6F8B24E2512A004C4666 /* Minesweeper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Minesweeper; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0AE6F8E24E2512A004C4666 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		C0AE6F9624E25159004C4666 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
+		C0AE6F9724E25159004C4666 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		C0AE6F9D24E25194004C4666 /* GameClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameClass.cpp; sourceTree = "<group>"; };
+		C0AE6F9E24E25194004C4666 /* GameClass.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameClass.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0AE6F9824E25159004C4666 /* SDL2_image.framework in Frameworks */,
+				C0AE6F9A24E25159004C4666 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +66,7 @@
 			children = (
 				C0AE6F8D24E2512A004C4666 /* Minesweeper */,
 				C0AE6F8C24E2512A004C4666 /* Products */,
+				C0AE6F9524E25159004C4666 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,8 +82,19 @@
 			isa = PBXGroup;
 			children = (
 				C0AE6F8E24E2512A004C4666 /* main.cpp */,
+				C0AE6F9D24E25194004C4666 /* GameClass.cpp */,
+				C0AE6F9E24E25194004C4666 /* GameClass.hpp */,
 			);
 			path = Minesweeper;
+			sourceTree = "<group>";
+		};
+		C0AE6F9524E25159004C4666 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0AE6F9624E25159004C4666 /* SDL2_image.framework */,
+				C0AE6F9724E25159004C4666 /* SDL2.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -72,6 +107,7 @@
 				C0AE6F8724E2512A004C4666 /* Sources */,
 				C0AE6F8824E2512A004C4666 /* Frameworks */,
 				C0AE6F8924E2512A004C4666 /* CopyFiles */,
+				C0AE6F9C24E25159004C4666 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -119,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0AE6F9F24E25194004C4666 /* GameClass.cpp in Sources */,
 				C0AE6F8F24E2512A004C4666 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,6 +276,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -247,6 +288,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
