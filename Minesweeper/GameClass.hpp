@@ -50,6 +50,8 @@ public:
     void clean();
     bool running() {return isRunning;}
     Tile grid[16][16];
+    void initGrid();
+    void updateGrid();
 private:
     int _redlevel = 255;
     bool isRunning;
