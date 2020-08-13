@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C036AD9C24E4DC290095FD53 /* randomGridGroups.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C036AD9A24E4DC290095FD53 /* randomGridGroups.cpp */; };
 		C0AE6F8F24E2512A004C4666 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0AE6F8E24E2512A004C4666 /* main.cpp */; };
 		C0AE6F9824E25159004C4666 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE6F9624E25159004C4666 /* SDL2_image.framework */; };
 		C0AE6F9924E25159004C4666 /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE6F9624E25159004C4666 /* SDL2_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -40,6 +41,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C036AD9A24E4DC290095FD53 /* randomGridGroups.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = randomGridGroups.cpp; sourceTree = "<group>"; };
+		C036AD9B24E4DC290095FD53 /* randomGridGroups.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = randomGridGroups.hpp; sourceTree = "<group>"; };
 		C0AE6F8B24E2512A004C4666 /* Minesweeper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Minesweeper; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0AE6F8E24E2512A004C4666 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		C0AE6F9624E25159004C4666 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
@@ -84,6 +87,8 @@
 				C0AE6F8E24E2512A004C4666 /* main.cpp */,
 				C0AE6F9D24E25194004C4666 /* GameClass.cpp */,
 				C0AE6F9E24E25194004C4666 /* GameClass.hpp */,
+				C036AD9A24E4DC290095FD53 /* randomGridGroups.cpp */,
+				C036AD9B24E4DC290095FD53 /* randomGridGroups.hpp */,
 			);
 			path = Minesweeper;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C036AD9C24E4DC290095FD53 /* randomGridGroups.cpp in Sources */,
 				C0AE6F9F24E25194004C4666 /* GameClass.cpp in Sources */,
 				C0AE6F8F24E2512A004C4666 /* main.cpp in Sources */,
 			);

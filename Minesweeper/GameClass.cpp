@@ -240,42 +240,46 @@ void Grid::updateTextures() {
     }
 }
 
-Tile* Grid::chooseAdjacentBlock(Tile* tile){
-    Tile* adjacentSpaces[8];
-    int adjacentFilled = 0;
-    for(int x = 0; x < 16; x++){
-        for(int y = 0; y < 16; y++){
-            if(areAdjacent(*tile, gameGrid[x][y])){
-                adjacentSpaces[adjacentFilled] = &gameGrid[x][y];
-                adjacentFilled++;
-            }
-        }
-    }
+Tile* Grid::randomAdjacentBlock(Tile tile){
+    //returns a pointer to any one of the 8 squares adjacent to the starting tile
+    Tile *adjacentSpaces[8];
+    adjacentSpaces[0] = &gameGrid[tile.xVal - 1][tile.yVal -1] ; //top left
+    adjacentSpaces[1] = &gameGrid[tile.xVal][tile.yVal -1]; //top center
+    adjacentSpaces[2] = &gameGrid[tile.xVal + 1][tile.yVal -1]; // top right
+    adjacentSpaces[3] = &gameGrid[tile.xVal +1][tile.yVal]; // right side
+    adjacentSpaces[4] = &gameGrid[tile.xVal + 1][tile.yVal + 1]; // bottom right
+    adjacentSpaces[5] = &gameGrid[tile.xVal][tile.yVal + 1]; // bottom center
+    adjacentSpaces[6] = &gameGrid[tile.xVal - 1][tile.yVal + 1]; // bottom left
+    adjacentSpaces[7] = &gameGrid[tile.xVal - 1][tile.yVal];// left side
+    //random int between 0 and 7 to choose which adjacent square gets pointed to
     int randIndex = rand() % 8;
-    Tile* newTile = adjacentSpaces[randIndex];
-    return newTile;
+    return adjacentSpaces[randIndex];
 }
 
+
 void Grid::setEmptyBlock(int originX, int originY, int numSpaces){
-    Tile* pgameGrid[16][16];
-    for(int x = 0; x < 16; x++){
-        for(int y = 0; y < 16; y++){
-            pgameGrid[x][y] = &gameGrid[x][y];
-        }
+    Tile* emptyGroup[24];
+    int assigned = 0;
+    emptyGroup[0] = &gameGrid[originX][originY];
+    //gameGrid[originX][originY].revealed = true;
+    assigned++;
+    while(assigned < numSpaces){
+        int randIndex = rand() % assigned;
+        Tile* pNewTile;
+        pNewTile = randomAdjacentBlock(*(emptyGroup[randIndex]));
+        emptyGroup[assigned] = pNewTile;
+        
     }
-    int tilesAssigned = 0;
-    Tile* origin = pgameGrid[originX][originY];
-    Tile* chosenTiles[numSpaces];
-    chosenTiles[0] = origin;
-    tilesAssigned++;
-    while(tilesAssigned < numSpaces){
-        int randIndex = rand() % tilesAssigned;
-        chosenTiles[tilesAssigned + 1] = chooseAdjacentBlock(chosenTiles[randIndex]);
-        tilesAssigned++;
-    }
-    
-    
-    }
+    /* array of tile pointers
+     initialize the first of the array
+     increment the count of assigned spaces
+    loop: while the number of tiles assigned < numSpaces(
+     1. choose which of the already assigned spaces to start from (need an array of tile pointers which gets modified with each iteration
+     2. pick a random tile adjacent to that space
+     3. assign that tile
+     4. increment the number of assigned tiles
+    )*/
+}
 
     
 
