@@ -11,6 +11,7 @@
 #include "/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL.h"
 #include "/Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h"
 #include <fstream>
+
 class Tile {
 public:
     Tile();
@@ -23,6 +24,7 @@ public:
     bool hasFlag;
     bool revealed;
     bool reservedEmpty;
+    bool inGroup;
     SDL_Rect tileRect;
     int currentTexture;
     void setTexture();
@@ -41,12 +43,34 @@ public:
     bool minesSet;
     int minesAdjacentTo(Tile tile);
     bool areAdjacent(Tile tileA, Tile tileB);
-    void setEmptyBlock(int originX, int originY, int numSpaces);
+    //void setEmptyBlock(Group group);
     void initializeMines(int clickX, int clickY);
     void leftClickAt(int clickX, int clickY);
     void rightClickAt(int clickX, int clickY);
-    Tile *randomAdjacentBlock(Tile startingTile);
+    //Tile *randomAdjacentBlock(Tile startingTile);
     void revealFirstEmpties();
+    int groupAX[7];
+    int groupAY[7];
+    void transferGroupToTiles();
+};
+
+class Group{
+public:
+    Group();
+    ~Group();
+    Grid workingGrid;
+    bool tilesFree[16][16];
+    int members;
+    int optionCount;
+    void init(Tile firstTile, Grid grid);
+    void addTile();
+    void updateOptions();
+    void fillGroup(int size);
+    void printGroup();
+    void initGridArrays();
+    Tile _memberTiles[15];
+private:
+    Tile _optionTiles[15 * 8];
 };
 
 
@@ -54,11 +78,12 @@ class Game{
 public:
     Game();
     ~Game();
+    Grid grid;
+    Group startingGroup;
     SDL_Texture * mineTile;
     SDL_Texture * emptyTile;
     SDL_Texture * flagTile;
     SDL_Texture * hiddenTile;
-    Grid grid;
     void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
     //handles user inputs and whatever the hell else
     void handleEvents();
@@ -75,4 +100,9 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
 };
+
+
+
+
+
 #endif /* GameClass_hpp */
