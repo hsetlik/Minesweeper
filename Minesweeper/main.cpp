@@ -8,6 +8,9 @@
 #include"GameClass.hpp"
 Game *game = nullptr;
 Grid globalGrid;
+int* groupX[7];
+int* groupY[7];
+
 
 int main(int argc, const char * argv[]) {
     game = new Game();

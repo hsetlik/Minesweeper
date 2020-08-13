@@ -49,9 +49,8 @@ public:
     void rightClickAt(int clickX, int clickY);
     //Tile *randomAdjacentBlock(Tile startingTile);
     void revealFirstEmpties();
-    int groupAX[7];
-    int groupAY[7];
-    void transferGroupToTiles();
+    void transferArraysToTiles();
+    void printTest();
 };
 
 class Group{
@@ -67,7 +66,6 @@ public:
     void updateOptions();
     void fillGroup(int size);
     void printGroup();
-    void initGridArrays();
     Tile _memberTiles[15];
 private:
     Tile _optionTiles[15 * 8];

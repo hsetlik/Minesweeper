@@ -85,7 +85,7 @@ void Game::handleEvents()
                 case SDL_BUTTON_LEFT:
                     if(grid.minesSet == false){
                         startingGroup.init(grid.gameGrid[clickX][clickY], grid);
-                        startingGroup.fillGroup(7);
+                        startingGroup.fillGroup(10);
                         //setGroupArrays(startingGroup, grid);
                         grid.initializeMines(clickX, clickY);
                     } else {
@@ -189,7 +189,8 @@ void Tile::setTexture(){
     }
 
 //Grid stuff
-
+int globalGroupX[10];
+int globalGroupY[10];
 Grid::Grid(){
 }
 Grid::~Grid(){
@@ -203,11 +204,12 @@ void Grid::init(){
             }
         }
     minesSet = false;
-    for(int i = 0; i < 7; i++){
-        groupAX[i] = 0;
-        groupAY[i] = 0;
+    for(int i = 0; i < 10; i++){
+        globalGroupX[i] = 0;
+        globalGroupY[i] = 0;
     }
     }
+
 
 bool Grid:: areAdjacent(Tile tileA, Tile tileB){
     //making a list of all 8 adjacent tiles
@@ -260,34 +262,45 @@ void Grid::updateTextures() {
 
 void Grid::revealFirstEmpties(){
     printf("ready to reveal empties\n");
-    for(int i = 0; i < 7; i++){
-        int currentX = groupAX[i];
-        printf("current member X: %d\n", currentX);
-        int currentY = groupAY[i];
-         printf("current member Y: %d\n", currentY);
+    for(int i = 0; i < 10; i++){
+        int currentX = globalGroupX[i];
+        int currentY = globalGroupY[i];
+        printf("printing member #%d: [%d][%d]\n", i, currentX, currentY);
         gameGrid[currentX][currentY].isHidden = false;
         gameGrid[currentX][currentY].revealed = true;
+        gameGrid[currentX][currentY].reservedEmpty = true;
     }
 }
 
 void Grid::initializeMines(int clickX, int clickY){
     printf("initializing mines. . .\n");
+    revealFirstEmpties();
     int totalMines = 40;
+    //printTest();
     for(int i = 0; i < totalMines; i++){
         int xChoice = rand() % 16;
         int yChoice = rand() % 16;
         if(gameGrid[xChoice][yChoice].reservedEmpty){
-            i++;
-            break;
+            i--;
         } else {
             gameGrid[xChoice][yChoice].hasMine = true;
             //these lines only for testing
             gameGrid[xChoice][yChoice].isHidden = false;
         }
     }
-    revealFirstEmpties();
     minesSet = true;
     printf("mines initialized\n");
+}
+
+void Grid::printTest(){
+    for(int x = 0; x < 16; x++){
+        for(int y = 0; y < 16; y++){
+            printf("Checking for empty at: [%d][%d]\n", x, y);
+            if(gameGrid[x][y].reservedEmpty){
+                printf("\nReserved Empty at: [%d][%d]\n\n", x, y);
+            }
+        }
+    }
 }
     
 void Grid:: rightClickAt(int clickX, int clickY){
@@ -305,11 +318,11 @@ void Grid::leftClickAt(int clickX, int clickY){
         printf("texture of clicked space: %d\n", gameGrid[clickX][clickY].currentTexture);
     }
 
-void Grid::transferGroupToTiles(){
-    for(int i = 0; i < 7; i++){
-        int currentX = groupAX[i];
+void Grid::transferArraysToTiles(){
+    for(int i = 0; i < 10; i++){
+        int currentX = globalGroupX[i];
         printf("Current X: %d\n", currentX);
-        int currentY = groupAY[i];
+        int currentY = globalGroupY[i];
         printf("Current Y: %d\n", currentY);
         gameGrid[currentX][currentY].reservedEmpty = true;
         printf("Reserved empty at: [%d][%d]\n", currentX, currentY);
@@ -339,6 +352,12 @@ void Group:: init(Tile firstTile, Grid grid){
     tilesFree[firstX][firstY] = false;
     _memberTiles[0] = workingGrid.gameGrid[firstX][firstY];
     members++;
+    globalGroupX[0] = firstX;
+    globalGroupY[0] = firstY;
+    for(int i = 1; i < 10; i++){
+        globalGroupX[i] = 0;
+        globalGroupY[i] = 0;
+    }
     int doubleCheckX = _memberTiles[0].xVal;
     int doubleCheckY = _memberTiles[0].yVal;
     printf("first space assigned to _memberSpaces at: [%d][%d]\n", doubleCheckX, doubleCheckY);
@@ -375,6 +394,7 @@ void Group::updateOptions(){
 
 void Group::addTile(){
     int spaceChoice = rand() % (optionCount);
+    spaceChoice += 1;
     printf("Possible indeces: %d\n", optionCount);
     printf("Chosen space index: %d\n", spaceChoice);
     int testX = _optionTiles[spaceChoice].xVal;
@@ -389,10 +409,8 @@ void Group::addTile(){
     tilesFree[chosenX][chosenY] = false;
     chosenSpace.inGroup = true;
     chosenSpace.reservedEmpty = true;
-    workingGrid.groupAX[members] = chosenX;
-    printf("X value for member #%d: %d\n", members, workingGrid.groupAX[members]);
-    workingGrid.groupAY[members] = chosenY;
-    printf("Y value for member #%d: %d\n", members, workingGrid.groupAY[members]);
+    globalGroupX[members - 1] = chosenX;
+    globalGroupY[members - 1] = chosenY;
     workingGrid.gameGrid[chosenX][chosenY].reservedEmpty = true;
     _memberTiles[members] = chosenSpace;
     members++;
@@ -406,21 +424,6 @@ void Group:: fillGroup(int size){
     printGroup();
 }
 
-void Group:: initGridArrays(){
-    for(int i = 0; i < members; i++){
-        workingGrid.groupAX[i] = _memberTiles[i].xVal;
-        workingGrid.groupAY[i] = _memberTiles[i].yVal;
-    }
-}
-
 void Group::printGroup(){
-    for(int i = 0; i < 7; i++){
-        int memberX = _memberTiles[i].xVal;
-        int memberY = _memberTiles[i].yVal;
-        workingGrid.groupAX[i] = memberX;
-        workingGrid.groupAY[i] = memberY;
-        workingGrid.gameGrid[memberX][memberY].reservedEmpty = true;
-        printf("Group Member #%d: [%d][%d]\n", i, memberX, memberY);
-    }
 }
 
