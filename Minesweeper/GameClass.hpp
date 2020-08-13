@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL.h"
 #include "/Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h"
+#include "/Library/Frameworks/SDL2_ttf.framework/Versions/A/Headers/SDL_ttf.h"
 #include <fstream>
 
 class Tile {
@@ -28,6 +29,7 @@ public:
     SDL_Rect tileRect;
     int currentTexture;
     void setTexture();
+    void drawNumber();
 private:
     int _topLeftXPx;
     int _topLeftYPx;

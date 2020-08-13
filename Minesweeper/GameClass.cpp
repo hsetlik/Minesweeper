@@ -187,6 +187,9 @@ void Tile::setTexture(){
         currentTexture = 3;
     }
     }
+void Tile::drawNumber(){
+    
+}
 
 //Grid stuff
 int globalGroupX[10];
@@ -275,6 +278,8 @@ void Grid::revealFirstEmpties(){
 void Grid::initializeMines(int clickX, int clickY){
     printf("initializing mines. . .\n");
     revealFirstEmpties();
+    gameGrid[clickX][clickY].isHidden = false;
+    gameGrid[clickX][clickY].revealed = true;
     int totalMines = 40;
     //printTest();
     for(int i = 0; i < totalMines; i++){
