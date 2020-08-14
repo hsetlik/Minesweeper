@@ -357,6 +357,8 @@ void Grid::initializeMines(int clickX, int clickY){
         int yChoice = rand() % 16;
         if(gameGrid[xChoice][yChoice].reservedEmpty){
             i--;
+        } else if((xChoice == clickX) && (yChoice == clickY)){
+            i--;
         } else {
             gameGrid[xChoice][yChoice].hasMine = true;
             //these lines only for testing
