@@ -61,36 +61,37 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     SDL_FreeSurface(tempSurfaceMine);
     printf("PNG files loaded to textures\n");
     //assigning the number textures
-    SDL_Surface * temp1 = IMG_Load("texture1Quarter.png");
+    
+    SDL_Surface * temp1 = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/Minesweeper/Minesweeper/texture1Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp1);
     SDL_FreeSurface(temp1);
     
-    SDL_Surface * temp2 = IMG_Load("texture2Quarter.png");
-    text1 = SDL_CreateTextureFromSurface(renderer, temp2);
+    SDL_Surface * temp2 = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/Minesweeper/Minesweeper/texture2Quarter.png");
+    text2 = SDL_CreateTextureFromSurface(renderer, temp2);
     SDL_FreeSurface(temp2);
     
-    SDL_Surface * temp3 = IMG_Load("texture3Quarter.png");
-    text1 = SDL_CreateTextureFromSurface(renderer, temp3);
+    SDL_Surface * temp3 = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/Minesweeper/Minesweeper/texture3Quarter.png");
+    text3 = SDL_CreateTextureFromSurface(renderer, temp3);
     SDL_FreeSurface(temp3);
     
-    SDL_Surface * temp4 = IMG_Load("texture4Quarter.png");
-    text1 = SDL_CreateTextureFromSurface(renderer, temp4);
+    SDL_Surface * temp4 = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/Minesweeper/Minesweeper/texture4Quarter.png");
+    text4 = SDL_CreateTextureFromSurface(renderer, temp4);
     SDL_FreeSurface(temp4);
     
-    SDL_Surface * temp5 = IMG_Load("texture5Quarter.png");
-    text1 = SDL_CreateTextureFromSurface(renderer, temp5);
+    SDL_Surface * temp5 = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/Minesweeper/Minesweeper/texture5Quarter.png");
+    text5 = SDL_CreateTextureFromSurface(renderer, temp5);
     SDL_FreeSurface(temp5);
     
-    SDL_Surface * temp6 = IMG_Load("texture6Quarter.png");
-    text1 = SDL_CreateTextureFromSurface(renderer, temp6);
+    SDL_Surface * temp6 = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/Minesweeper/Minesweeper/texture6Quarter.png");
+    text6 = SDL_CreateTextureFromSurface(renderer, temp6);
     SDL_FreeSurface(temp6);
     
-    SDL_Surface * temp7 = IMG_Load("texture7Quarter.png");
-    text1 = SDL_CreateTextureFromSurface(renderer, temp7);
+    SDL_Surface * temp7 = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/Minesweeper/Minesweeper/texture7Quarter.png");
+    text7 = SDL_CreateTextureFromSurface(renderer, temp7);
     SDL_FreeSurface(temp7);
     
-    SDL_Surface * temp8 = IMG_Load("texture8Quarter.png");
-    text1 = SDL_CreateTextureFromSurface(renderer, temp8);
+    SDL_Surface * temp8 = IMG_Load("/Users/SFMAdmin/Desktop/Programming/SDL_projects/Minesweeper/Minesweeper/texture8Quarter.png");
+    text8 = SDL_CreateTextureFromSurface(renderer, temp8);
     SDL_FreeSurface(temp8);
     printf("Number textures initialized\n");
     grid.init();
@@ -178,12 +179,8 @@ void Game::render(){
                 SDL_RenderCopy(renderer, mineTile, NULL, &currentRect);
                     break;}
                 case 3:{
-                    int mineNumber = grid.gameGrid[x][y].drawNumber;
+                    int mineNumber = grid.minesAdjacentTo(grid.gameGrid[x][y]);
                     switch(mineNumber){
-                        case 0: {
-                            SDL_RenderCopy(renderer, emptyTile, NULL, &currentRect);
-                            break;
-                        }
                         case 1: {
                             SDL_RenderCopy(renderer, text1, NULL, &currentRect);
                             break;
@@ -216,16 +213,19 @@ void Game::render(){
                             SDL_RenderCopy(renderer, text8, NULL, &currentRect);
                             break;
                         }
+                        default: {
+                            SDL_RenderCopy(renderer, emptyTile, NULL, &currentRect);
+                            break;
+                        }
                             
                     }
-                    
                 }
             }
            
             
         }
-     SDL_RenderPresent(renderer);
     }
+    SDL_RenderPresent(renderer);
 }
 
 // Time for the Tile Class
@@ -360,7 +360,7 @@ void Grid::initializeMines(int clickX, int clickY){
         } else {
             gameGrid[xChoice][yChoice].hasMine = true;
             //these lines only for testing
-            gameGrid[xChoice][yChoice].isHidden = false;
+            //gameGrid[xChoice][yChoice].isHidden = false;
         }
     }
     minesSet = true;
@@ -394,6 +394,16 @@ void Grid::leftClickAt(int clickX, int clickY){
         gameGrid[clickX][clickY].isHidden = false;
         gameGrid[clickX][clickY].revealed = true;
         printf("texture of clicked space: %d\n", gameGrid[clickX][clickY].currentTexture);
+        printf("mines adjacent to space: %d\n", minesAdjacentTo(gameGrid[clickX][clickY]));
+    if(gameGrid[clickX][clickY].hasMine){
+        for(int x = 0; x < 16; x++){
+            for(int y = 0; y < 16; y++){
+                if(gameGrid[x][y].hasMine){
+                    gameGrid[x][y].isHidden = false;
+                }
+            }
+        }
+    }
     }
 
 void Grid::transferArraysToTiles(){
