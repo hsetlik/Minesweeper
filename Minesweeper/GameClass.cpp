@@ -60,6 +60,40 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     mineTile = SDL_CreateTextureFromSurface(renderer, tempSurfaceMine);
     SDL_FreeSurface(tempSurfaceMine);
     printf("PNG files loaded to textures\n");
+    //assigning the number textures
+    SDL_Color color = {0, 0, 255};
+    SDL_Surface * temp1 = //TTF_RenderText_Solid(font, "1", color);
+    text1 = SDL_CreateTextureFromSurface(renderer, temp1);
+    SDL_FreeSurface(temp1);
+    
+    SDL_Surface * temp2 = //TTF_RenderText_Solid(font, "2", color);
+    text1 = SDL_CreateTextureFromSurface(renderer, temp2);
+    SDL_FreeSurface(temp2);
+    
+    SDL_Surface * temp3 = //TTF_RenderText_Solid(font, "3", color);
+    text1 = SDL_CreateTextureFromSurface(renderer, temp3);
+    SDL_FreeSurface(temp3);
+    
+    SDL_Surface * temp4 = //TTF_RenderText_Solid(font, "4", color);
+    text1 = SDL_CreateTextureFromSurface(renderer, temp4);
+    SDL_FreeSurface(temp4);
+    
+    SDL_Surface * temp5 = //TTF_RenderText_Solid(font, "5", color);
+    text1 = SDL_CreateTextureFromSurface(renderer, temp5);
+    SDL_FreeSurface(temp5);
+    
+    SDL_Surface * temp6 = //TTF_RenderText_Solid(font, "6", color);
+    text1 = SDL_CreateTextureFromSurface(renderer, temp6);
+    SDL_FreeSurface(temp6);
+    
+    SDL_Surface * temp7 = //TTF_RenderText_Solid(font, "7", color);
+    text1 = SDL_CreateTextureFromSurface(renderer, temp7);
+    SDL_FreeSurface(temp7);
+    
+    SDL_Surface * temp8 = //TTF_RenderText_Solid(font, "8", color);
+    text1 = SDL_CreateTextureFromSurface(renderer, temp8);
+    SDL_FreeSurface(temp8);
+    printf("Number textures initialized");
     grid.init();
     printf("Grid initialized\n");
 }
@@ -119,6 +153,8 @@ void Game::clean()
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     IMG_Quit();
+    TTF_CloseFont(font);
+    TTF_Quit();
     SDL_Quit();
     printf("Game Cleaned\n");
 }

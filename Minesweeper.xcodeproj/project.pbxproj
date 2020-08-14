@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C0A8383F24E5374800762068 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8383E24E5374800762068 /* SDL2_ttf.framework */; };
-		C0A8384024E5374800762068 /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8383E24E5374800762068 /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C0AE6F8F24E2512A004C4666 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0AE6F8E24E2512A004C4666 /* main.cpp */; };
 		C0AE6F9824E25159004C4666 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE6F9624E25159004C4666 /* SDL2_image.framework */; };
 		C0AE6F9924E25159004C4666 /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C0AE6F9624E25159004C4666 /* SDL2_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -34,7 +32,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C0AE6F9924E25159004C4666 /* SDL2_image.framework in Embed Frameworks */,
-				C0A8384024E5374800762068 /* SDL2_ttf.framework in Embed Frameworks */,
 				C0AE6F9B24E25159004C4666 /* SDL2.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -50,6 +47,8 @@
 		C0AE6F9724E25159004C4666 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		C0AE6F9D24E25194004C4666 /* GameClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameClass.cpp; sourceTree = "<group>"; };
 		C0AE6F9E24E25194004C4666 /* GameClass.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameClass.hpp; sourceTree = "<group>"; };
+		C0DFC84024E62F0500122DAB /* Frameworks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Frameworks; path = ../../../../../../Library/Frameworks/SDL2_ttf.framework/Versions/A/Frameworks; sourceTree = "<group>"; };
+		C0DFC84124E62F3E00122DAB /* FreeType.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FreeType.framework; path = ../../../../../../Library/Frameworks/SDL2_ttf.framework/Versions/A/Frameworks/FreeType.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +57,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0AE6F9824E25159004C4666 /* SDL2_image.framework in Frameworks */,
-				C0A8383F24E5374800762068 /* SDL2_ttf.framework in Frameworks */,
 				C0AE6F9A24E25159004C4666 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +94,8 @@
 		C0AE6F9524E25159004C4666 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0DFC84124E62F3E00122DAB /* FreeType.framework */,
+				C0DFC84024E62F0500122DAB /* Frameworks */,
 				C0A8383E24E5374800762068 /* SDL2_ttf.framework */,
 				C0AE6F9624E25159004C4666 /* SDL2_image.framework */,
 				C0AE6F9724E25159004C4666 /* SDL2.framework */,
@@ -281,24 +281,32 @@
 		C0AE6F9324E2512A004C4666 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9GGFZC47P2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL2_ttf.framework/Versions/A/Frameworks",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		C0AE6F9424E2512A004C4666 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9GGFZC47P2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL2_ttf.framework/Versions/A/Frameworks",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

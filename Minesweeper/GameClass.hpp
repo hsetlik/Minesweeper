@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include "/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL.h"
 #include "/Library/Frameworks/SDL2_image.framework/Headers/SDL_image.h"
-#include "/Library/Frameworks/SDL2_ttf.framework/Versions/A/Headers/SDL_ttf.h"
 #include <fstream>
 
 class Tile {
@@ -84,6 +83,14 @@ public:
     SDL_Texture * emptyTile;
     SDL_Texture * flagTile;
     SDL_Texture * hiddenTile;
+    SDL_Texture * text1;
+    SDL_Texture * text2;
+    SDL_Texture * text3;
+    SDL_Texture * text4;
+    SDL_Texture * text5;
+    SDL_Texture * text6;
+    SDL_Texture * text7;
+    SDL_Texture * text8;
     void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
     //handles user inputs and whatever the hell else
     void handleEvents();
