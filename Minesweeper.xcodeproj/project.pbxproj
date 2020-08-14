@@ -40,6 +40,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C00FE4E224E65046008C64E8 /* texture5Quarter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture5Quarter.png; path = Minesweeper/texture5Quarter.png; sourceTree = "<group>"; };
+		C00FE4E324E65047008C64E8 /* texture8Quarter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture8Quarter.png; path = Minesweeper/texture8Quarter.png; sourceTree = "<group>"; };
+		C00FE4E424E65047008C64E8 /* texture7Quarter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture7Quarter.png; path = Minesweeper/texture7Quarter.png; sourceTree = "<group>"; };
+		C00FE4E524E65047008C64E8 /* texture3Quarter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture3Quarter.png; path = Minesweeper/texture3Quarter.png; sourceTree = "<group>"; };
+		C00FE4E624E65047008C64E8 /* texture1Quarter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture1Quarter.png; path = Minesweeper/texture1Quarter.png; sourceTree = "<group>"; };
+		C00FE4E724E65047008C64E8 /* texture4Quarter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture4Quarter.png; path = Minesweeper/texture4Quarter.png; sourceTree = "<group>"; };
+		C00FE4E824E65047008C64E8 /* texture2Quarter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture2Quarter.png; path = Minesweeper/texture2Quarter.png; sourceTree = "<group>"; };
+		C00FE4E924E65047008C64E8 /* texture6Quarter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture6Quarter.png; path = Minesweeper/texture6Quarter.png; sourceTree = "<group>"; };
 		C0A8383E24E5374800762068 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
 		C0AE6F8B24E2512A004C4666 /* Minesweeper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Minesweeper; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0AE6F8E24E2512A004C4666 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -67,6 +75,14 @@
 		C0AE6F8224E25129004C4666 = {
 			isa = PBXGroup;
 			children = (
+				C00FE4E624E65047008C64E8 /* texture1Quarter.png */,
+				C00FE4E824E65047008C64E8 /* texture2Quarter.png */,
+				C00FE4E524E65047008C64E8 /* texture3Quarter.png */,
+				C00FE4E724E65047008C64E8 /* texture4Quarter.png */,
+				C00FE4E224E65046008C64E8 /* texture5Quarter.png */,
+				C00FE4E924E65047008C64E8 /* texture6Quarter.png */,
+				C00FE4E424E65047008C64E8 /* texture7Quarter.png */,
+				C00FE4E324E65047008C64E8 /* texture8Quarter.png */,
 				C0AE6F8D24E2512A004C4666 /* Minesweeper */,
 				C0AE6F8C24E2512A004C4666 /* Products */,
 				C0AE6F9524E25159004C4666 /* Frameworks */,

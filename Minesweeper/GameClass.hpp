@@ -28,7 +28,7 @@ public:
     SDL_Rect tileRect;
     int currentTexture;
     void setTexture();
-    void drawNumber();
+    int drawNumber;
 private:
     int _topLeftXPx;
     int _topLeftYPx;
@@ -52,6 +52,7 @@ public:
     void revealFirstEmpties();
     void transferArraysToTiles();
     void printTest();
+    void setNumbers(Tile tile);
 };
 
 class Group{
@@ -107,9 +108,4 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
 };
-
-
-
-
-
 #endif /* GameClass_hpp */

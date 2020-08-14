@@ -61,39 +61,38 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     SDL_FreeSurface(tempSurfaceMine);
     printf("PNG files loaded to textures\n");
     //assigning the number textures
-    SDL_Color color = {0, 0, 255};
-    SDL_Surface * temp1 = //TTF_RenderText_Solid(font, "1", color);
+    SDL_Surface * temp1 = IMG_Load("texture1Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp1);
     SDL_FreeSurface(temp1);
     
-    SDL_Surface * temp2 = //TTF_RenderText_Solid(font, "2", color);
+    SDL_Surface * temp2 = IMG_Load("texture2Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp2);
     SDL_FreeSurface(temp2);
     
-    SDL_Surface * temp3 = //TTF_RenderText_Solid(font, "3", color);
+    SDL_Surface * temp3 = IMG_Load("texture3Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp3);
     SDL_FreeSurface(temp3);
     
-    SDL_Surface * temp4 = //TTF_RenderText_Solid(font, "4", color);
+    SDL_Surface * temp4 = IMG_Load("texture4Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp4);
     SDL_FreeSurface(temp4);
     
-    SDL_Surface * temp5 = //TTF_RenderText_Solid(font, "5", color);
+    SDL_Surface * temp5 = IMG_Load("texture5Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp5);
     SDL_FreeSurface(temp5);
     
-    SDL_Surface * temp6 = //TTF_RenderText_Solid(font, "6", color);
+    SDL_Surface * temp6 = IMG_Load("texture6Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp6);
     SDL_FreeSurface(temp6);
     
-    SDL_Surface * temp7 = //TTF_RenderText_Solid(font, "7", color);
+    SDL_Surface * temp7 = IMG_Load("texture7Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp7);
     SDL_FreeSurface(temp7);
     
-    SDL_Surface * temp8 = //TTF_RenderText_Solid(font, "8", color);
+    SDL_Surface * temp8 = IMG_Load("texture8Quarter.png");
     text1 = SDL_CreateTextureFromSurface(renderer, temp8);
     SDL_FreeSurface(temp8);
-    printf("Number textures initialized");
+    printf("Number textures initialized\n");
     grid.init();
     printf("Grid initialized\n");
 }
@@ -153,8 +152,6 @@ void Game::clean()
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     IMG_Quit();
-    TTF_CloseFont(font);
-    TTF_Quit();
     SDL_Quit();
     printf("Game Cleaned\n");
 }
@@ -171,26 +168,66 @@ void Game::render(){
                 currentRect.x = 25 * x;
                 currentRect.y = 25 * y;
             switch (texture) {
-                case 0:
+                case 0:{
                     SDL_RenderCopy(renderer, hiddenTile, NULL, &currentRect);
-                    break;
-                case 1:
+                    break;}
+                case 1:{
                 SDL_RenderCopy(renderer, flagTile, NULL, &currentRect);
-                break;
-                case 2:
+                    break;}
+                case 2:{
                 SDL_RenderCopy(renderer, mineTile, NULL, &currentRect);
-                break;
-                case 3:
-                    SDL_RenderCopy(renderer, emptyTile, NULL, &currentRect);
-                    break;
-                /*default:
-                  SDL_RenderCopy(renderer, hiddenTile, NULL, &currentRect);
-                  break;*/
+                    break;}
+                case 3:{
+                    int mineNumber = grid.gameGrid[x][y].drawNumber;
+                    switch(mineNumber){
+                        case 0: {
+                            SDL_RenderCopy(renderer, emptyTile, NULL, &currentRect);
+                            break;
+                        }
+                        case 1: {
+                            SDL_RenderCopy(renderer, text1, NULL, &currentRect);
+                            break;
+                        }
+                        case 2: {
+                            SDL_RenderCopy(renderer, text2, NULL, &currentRect);
+                            break;
+                        }
+                        case 3: {
+                            SDL_RenderCopy(renderer, text3, NULL, &currentRect);
+                            break;
+                        }
+                        case 4: {
+                            SDL_RenderCopy(renderer, text4, NULL, &currentRect);
+                            break;
+                        }
+                        case 5: {
+                            SDL_RenderCopy(renderer, text5, NULL, &currentRect);
+                            break;
+                        }
+                        case 6: {
+                            SDL_RenderCopy(renderer, text6, NULL, &currentRect);
+                            break;
+                        }
+                        case 7: {
+                            SDL_RenderCopy(renderer, text7, NULL, &currentRect);
+                            break;
+                        }
+                        case 8: {
+                            SDL_RenderCopy(renderer, text8, NULL, &currentRect);
+                            break;
+                        }
+                            
+                    }
+                    
+                }
             }
+           
+            
         }
+     SDL_RenderPresent(renderer);
     }
-    SDL_RenderPresent(renderer);
 }
+
 // Time for the Tile Class
 Tile::Tile(){
 }
@@ -223,9 +260,6 @@ void Tile::setTexture(){
         currentTexture = 3;
     }
     }
-void Tile::drawNumber(){
-    
-}
 
 //Grid stuff
 int globalGroupX[10];
@@ -349,7 +383,10 @@ void Grid:: rightClickAt(int clickX, int clickY){
       if(gameGrid[clickX][clickY].isHidden){
         gameGrid[clickX][clickY].hasFlag = true;
         gameGrid[clickX][clickY].isHidden = false;
-    }
+      } else if(gameGrid[clickX][clickY].hasFlag){
+          gameGrid[clickX][clickY].hasFlag = false;
+          gameGrid[clickX][clickY].isHidden = true;
+      }
 }
 
 void Grid::leftClickAt(int clickX, int clickY){
@@ -368,6 +405,11 @@ void Grid::transferArraysToTiles(){
         gameGrid[currentX][currentY].reservedEmpty = true;
         printf("Reserved empty at: [%d][%d]\n", currentX, currentY);
     }
+}
+
+void Grid::setNumbers(Tile tile){
+    int adjacentMines = minesAdjacentTo(tile);
+    tile.drawNumber = adjacentMines;
 }
 
 Group::Group(){
